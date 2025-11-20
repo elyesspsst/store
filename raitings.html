@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sip & Gossip - Rate Your Experience</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.cdnfonts.com/css/great-day-personal-use-2" rel="stylesheet">
+
+<style>
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+:root {
+    --primary-color: #e74c3c;
+    --text-color: #34495e;
+    --bg-color: #fff;
+    --gold: #f39c12;
+    --ternary-color: #e1ddcd;
+}
+
+body {
+    padding-top: 80px;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.6) 100%),
+                url('/photos/restaurant.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    color: var(--text-color);
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: none;
+    pointer-events: none;
+    z-index: 1;
+}
+
+body::after {
+    content: '';
+    display: none;
+}
+
+/* Header */
+.men_card {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--ternary-color);
+    padding: 15px 30px;
+    box-shadow: 0 6px 25px rgba(0,0,0,0.15);
+    z-index: 1000;
+}
+
+.rest_icon {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.rest_icon:hover {
+    transform: translateY(-5px);
+}
+
+.rest_icon a {
+    display: block;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    background: var(--bg-color);
+}
+
+.rest_icon a:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 6px 20px rgba(231, 76, 60, 0.3);
+    transform: scale(1.05);
+}
+
+.rest_icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: flex;
+    gap: 15px;
+}
+
+.rest_icon h1 {
+    color: var(--text-color);
+    text-align: center;
+    text-transform: capitalize;
+    white-space: nowrap;
+}
+
+#abc {
+    font-size: 2cm;
+    font-family: 'Great Day Personal Use', sans-serif;
+    color: var(--primary-color);
+    text-align: center;
+}
+#abc2 {
+    font-size: 1cm;
+    font-family: 'Great Day Personal Use', sans-serif;
+    /* color: var(--success-color); */
+    color:var(--text-color);
+    text-align: center;
+}
+
+#abc2:hover {
+    font-size: 1cm;
+    font-family: 'Great Day Personal Use', sans-serif;
+    /* color: var(--success-color); */
+    color: var(--gold);
+    text-align: center;
+}
+
+.navbar {
+    display: flex;
+    gap: 1.5rem;
+    flex: 1;
+    justify-content: center;
+    list-style: none;
+}
+
+.navbar a {
+    padding: 8px 16px;
+    border-radius: 8px;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.navbar a:hover,
+.home-active {
+    color: var(--primary-color);
+    background: rgba(231, 76, 60, 0.1);
+}
+
+.profil {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.profil:hover {
+    background: rgba(0,0,0,0.05);
+}
+
+.profile-avatar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.profile-avatar img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #4e0d0d;
+}
+
+/* Rating Section */
+
+.rating-page-container {
+    max-width: 500px;
+    margin: 40px auto;
+    background: #111;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    border: 1px solid #333;
+    padding-bottom:100px;
+    position: relative;
+    z-index: 2;
+}
+
+.container {
+    text-align: center;
+}
+
+.post {
+    display: none;
+}
+
+.rating-text {
+    
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    color: #ccc;
+}
+
+.star-widget input {
+    display: none;
+}
+
+.star-widget label {
+    float: right;
+    font-size: 50px;
+    color: #444;
+    padding: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+input:not(:checked) ~ label:hover,
+input:not(:checked) ~ label:hover ~ label {
+    color: #ff9800;
+}
+
+input:checked ~ label {
+    color: #ff9800;
+}
+
+#rate-5:checked ~ label {
+    text-shadow: 0 0 20px rgba(255, 152, 0, 0.3);
+}
+
+#rate-1:checked ~ form header::before {
+    content: "Terrible at Sip & Gossip. 😡";
+    color: #ff5252;
+    font-size: 1cm;
+    font-family: 'Great Day Personal Use', sans-serif;
+    text-align: center;
+}
+
+
+
+
+#rate-2:checked ~ form header::before {
+    content: "Poor experience 😠";
+    color: #ff7043;
+    font-size: 1cm;
+    font-family: 'Great Day Personal Use', sans-serif;
+    text-align: center;
+}
+
+#rate-3:checked ~ form header::before {
+    content: "Okay restaurant. 🙂";
+    color: #ffb300;
+    font-size: 1cm;
+    font-family: 'Great Day Personal Use', sans-serif;
+    text-align: center;
+}
+
+#rate-4:checked ~ form header::before {
+    content: "Really enjoyed it ! 😊";
+    color: #66bb6a;
+    font-size: 1cm;
+    font-family: 'Great Day Personal Use', sans-serif;
+    text-align: center;
+}
+
+#rate-5:checked ~ form header::before {
+    content: "Loved everything at Sip & Gossip 😍";
+    color: #4caf50;
+    font-size: 1cm;
+    font-family: 'Great Day Personal Use', sans-serif;
+    text-align: center;
+}
+
+form {
+    display: none;
+    clear: both;
+}
+
+input:checked ~ form {
+    display: block;
+}
+
+form header {
+    font-size: 1.5rem;
+    margin: 30px 0 20px;
+}
+
+.textarea textarea {
+    width: 100%;
+    height: 120px;
+    padding: 15px;
+    background: #222;
+    color: #eee;
+    border: 2px solid #333;
+    border-radius: 8px;
+    resize: none;
+    font-size: 1rem;
+}
+
+.btn button {
+    width: 100%;
+    height: 50px;
+    margin-top: 20px;
+    background: #66bb6a;
+    color: white;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn button:hover {
+    background: #4caf50;
+    transform: translateY(-2px);
+}
+
+.success-message {
+    display: none;
+    color: #27ae60;
+    margin-top: 10px;
+    font-size: 1.1rem;
+}
+
+.edit {
+    margin-top: 20px;
+    color: var(--primary-color);
+    cursor: pointer;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.text {
+    font-size: 1.5rem;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+/* Footer */
+footer {
+    margin-top: 600px;
+    background: #f8f3f3;
+    padding: 40px 20px;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.footer-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.footer-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--gold);
+    margin: 20px auto;
+    display: block;
+    transition: 0.3s;
+}
+
+.footer-img:hover {
+    transform: scale(1.1);
+}
+
+.footer-social {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.social-link {
+    padding: 10px 20px;
+    background: var(--ternary-color);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: 0.3s;
+}
+
+.social-link:hover {
+    transform: translateY(-3px);
+}
+
+.footer-bottom {
+    background: var(--ternary-color);
+    padding: 15px;
+    margin-top: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<header class="men_card">
+    <div class="rest_icon">
+        <a href="#"><img src="photos/star-rating.avif" alt="Logo"></a>
+        <h1 id="abc2">Sip & Gossip</h1>
+    </div>
+
+    <ul class="navbar">
+        <li><a href="store.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="card.html">Card</a></li>
+        <li><a href="raitings.html" class="home-active">Rate Us</a></li>
+        <li><a href="chefs.html">Chefs</a></li>
+        <li><a href="#">Orders</a></li>
+        <li><a href="#">Book a Table</a></li>
+    </ul>
+
+    <div class="profil">
+        <div class="profile-avatar">
+            <img src="photos/profil.jpg" alt="Profile">
+            <span>Elyes & Eya</span>
+        </div>
+    </div>
+</header>
+
+<div class="rating-page-container">
+    <div class="container">
+        <div class="post">
+            <div class="text">Thanks for your feedback!</div>
+            <div class="success-message">Your review has been submitted successfully.</div>
+            <div class="edit">Edit Review</div>
+        </div>
+
+        <div class="rating-text">Rate your experience at Sip & Gossip:</div>
+
+        <div class="star-widget">
+            <input type="radio" name="rate" id="rate-5">
+            <label for="rate-5"><i class="fas fa-star"></i></label>
+
+            <input type="radio" name="rate" id="rate-4">
+            <label for="rate-4"><i class="fas fa-star"></i></label>
+
+            <input type="radio" name="rate" id="rate-3">
+            <label for="rate-3"><i class="fas fa-star"></i></label>
+
+            <input type="radio" name="rate" id="rate-2">
+            <label for="rate-2"><i class="fas fa-star"></i></label>
+
+            <input type="radio" name="rate" id="rate-1">
+            <label for="rate-1"><i class="fas fa-star"></i></label>
+
+            <form action="#">
+                <header></header>
+                <div class="textarea">
+                    <textarea placeholder="Describe your experience at Sip & Gossip..."></textarea>
+                </div>
+                <div class="btn">
+                    <button type="submit">Submit Review</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-content">
+        <h3>Sip & Gossip Restaurant</h3>
+        <p>Fresh & Organic Food</p>
+
+        <a href='https://maps.app.goo.gl/SiKcX4Z9uEmpLJpW8'>
+            <img src="photos/issat.jpg" class="footer-img" alt="Location">
+        </a>
+
+        <h4>Contact Us</h4>
+        <p>Follow us on social media</p>
+
+        <div class="footer-social">
+            <a href="https://www.facebook.com/profile.php?id=100077374508212" target="_blank" class="social-link">Facebook</a>
+            <a href="https://www.instagram.com/sip_nd_gossip_09/" target="_blank" class="social-link">Instagram</a>
+            <a href="https://mailtolink.me/" class="social-link">Email</a>
+            <a href="https://maps.app.goo.gl/VurK1g3XR4TViuUz6" target="_blank" class="social-link">Location</a>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2026 Sip & Gossip Restaurant. Made with ❤️ by Elyes & Eya.</p>
+    </div>
+</footer>
+
+<script>
+const btn = document.querySelector("button");
+const post = document.querySelector(".post");
+const widget = document.querySelector(".star-widget");
+const editbtn = document.querySelector(".edit");
+const successMessage = document.querySelector(".success-message");
+const textarea = document.querySelector("textarea");
+const starInputs = document.querySelectorAll('input[name="rate"]');
+
+btn.onclick = e => {
+    e.preventDefault();
+
+    let ratingSelected = [...starInputs].some(inp => inp.checked);
+    if (!ratingSelected) {
+        alert("Please select a rating before submitting.");
+        return;
+    }
+
+    if (textarea.value.trim() === "") {
+        alert("Please describe your experience before submitting.");
+        return;
+    }
+
+    widget.style.display = "none";
+    post.style.display = "block";
+    setTimeout(() => successMessage.style.display = "block", 500);
+};
+
+editbtn.onclick = () => {
+    widget.style.display = "block";
+    post.style.display = "none";
+    successMessage.style.display = "none";
+};
+</script>
+
+</body>
+</html>

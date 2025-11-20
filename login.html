@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login - Sip & Gossip</title>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)),
+                url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=80');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    min-height: 100vh;
+}
+
+/* Header */
+.men_card {
+    background: #e1ddcd;
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.rest_icon {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.rest_icon img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: white;
+    padding: 5px;
+}
+
+.rest_icon h1 {
+    color: #2b2b2b;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.navbar {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+}
+
+.navbar li a {
+    color: #34495e;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.navbar li a:hover,
+.navbar li a.home-active {
+    background: rgba(231, 76, 60, 0.1);
+    color: #e74c3c;
+}
+
+.profil {
+    position: relative;
+}
+
+.profile-avatar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 8px 15px;
+    border-radius: 25px;
+    transition: 0.3s;
+}
+
+.profile-avatar:hover {
+    background: rgba(0,0,0,0.05);
+}
+
+.profile-avatar img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #4e0d0d;
+}
+
+.profile-avatar span {
+    color: #2b2b2b;
+    font-weight: 600;
+}
+
+.arrow-icon {
+    color: #2b2b2b;
+    font-size: 1.2rem;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    min-width: 200px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: 0.3s;
+}
+
+.profile-avatar:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-menu ul {
+    list-style: none;
+    padding: 10px 0;
+}
+
+.dropdown-menu ul li a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 20px;
+    color: #34495e;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.dropdown-menu ul li a:hover {
+    background: #f8f8f8;
+}
+
+.dropdown-menu ul li a i {
+    font-size: 1.2rem;
+    color: #e74c3c;
+}
+
+/* Login Container */
+.login-container {
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    margin: 70px auto;
+    max-width: 500px;
+    padding: 45px 40px;
+    border-radius: 25px;
+    box-shadow: 0 15px 50px rgba(0,0,0,0.4);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+.main-icon {
+    font-size: 4.5rem;
+    color: white;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+
+h3 {
+    margin: 0;
+    font-size: 2rem;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.subtitle {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.95);
+    text-align: center;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.login-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: white;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.form-group input {
+    padding: 14px 16px;
+    font-size: 1rem;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    transition: 0.3s;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.form-group input:focus {
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.3);
+    outline: none;
+    border-color: white;
+    background: white;
+}
+
+/* Password Input with Eye Icon */
+.password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-container input {
+    width: 100%;
+    padding-right: 50px; /* Space for the eye icon */
+}
+
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #666;
+    font-size: 1.2rem;
+    transition: color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.toggle-password:hover {
+    color: #e74c3c;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.remember-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.remember-group input {
+    width: 19px;
+    height: 19px;
+    accent-color: white;
+    cursor: pointer;
+}
+
+.remember-group label {
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.btn-container {
+    display: flex;
+    gap: 15px;
+}
+
+.btn {
+    flex: 1;
+    padding: 14px 20px;
+    font-weight: 700;
+    border-radius: 20px;
+    border: 2px solid white;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    align-items: center;
+    background: #27ae60;
+    color: white;
+}
+
+.btn:hover {
+    background: #229954;
+    transform: translateY(-2px);
+    box-shadow: 0 7px 20px rgba(0,0,0,0.3);
+}
+
+#btn-cls {
+    flex: 1;
+    padding: 14px 20px;
+    font-weight: 700;
+    border-radius: 20px;
+    border: 2px solid white;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    align-items: center;
+}
+
+#btn-cls:hover {
+    background: white;
+    color: #333;
+    transform: translateY(-2px);
+    box-shadow: 0 7px 20px rgba(0,0,0,0.3);
+}
+
+.register-link {
+    text-align: center;
+    color: white;
+    font-size: 1rem;
+}
+
+.register-link h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: white;
+    margin: 0;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.register-link a {
+    color: #f39c12;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+    color: #fff;
+}
+
+@media (max-width: 768px) {
+    .men_card {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px 20px;
+    }
+
+    .navbar {
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-container {
+        padding: 35px 25px;
+        margin: 40px 20px;
+    }
+
+    .btn-container {
+        flex-direction: column;
+    }
+}
+</style>
+</head>
+
+<body>
+<header class="men_card">
+    <div class="rest_icon">
+        <a href="#">
+            <img src="/photos/login.jpg" alt="Sip & Gossip">
+        </a>
+        <h1 id="abc2">Sip & Gossip</h1>
+    </div>
+        
+    <ul class="navbar">
+        <li><a href="store.html" class="home-active">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="card.html">Card</a></li>
+        <li><a href="raitings.html">Rate Us</a></li>
+        <li><a href="chefs.html">Chefs</a></li>
+        <li><a href="#">Orders</a></li>
+        <li><a href="orders">Book a Table</a></li>
+    </ul>
+        
+    <div class="profil">
+        <div class="profile-avatar">
+            <img src="/photos/profil.jpg" alt="Elyes & Eya">
+            <span>Elyes & Eya</span>
+            <i class='bx bx-caret-down arrow-icon'></i>
+            
+            <div class="dropdown-menu">
+                <ul>
+                    <li><a href="login.html"><i class='bx bx-log-in'></i> Log in</a></li>
+                    <li><a href="register.html"><i class='bx bx-user-plus'></i> Sign Up</a></li>
+                    <li><a href="#"><i class='bx bx-user'></i> Profile</a></li>
+                    <li><a href="about_us.html"><i class='bx bx-info-circle'></i> About</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+
+<section>
+    <div class="login-container">
+        <i class="fa-solid fa-right-to-bracket main-icon"></i>
+
+        <h3>Welcome Back</h3>
+        <p class="subtitle">Login to continue your journey!</p>
+
+        <form id="loginForm" class="login-form">
+            <div class="form-group">
+                <label for="email"><i class="fa-solid fa-envelope"></i> Email Address</label>
+                <input type="email" id="email" required placeholder="Enter your email">
+            </div>
+
+            <div class="form-group">
+                <label for="password"><i class="fa-solid fa-lock"></i> Password</label>
+                <div class="password-container">
+                    <input type="password" id="password" required placeholder="Enter your password">
+                    <button type="button" class="toggle-password" id="togglePassword">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="remember-group">
+                <input type="checkbox" id="remember">
+                <label for="remember">Remember me</label>
+            </div>
+
+            <div class="btn-container">
+                <button type="button" onclick="history.back()" id="btn-cls">Cancel</button>
+                <button type="submit" class="btn btn-primary">
+                    Login <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </form>
+
+        <div class="register-link">
+            <h2>Don't have an account? <a href="register.html">Register</a></h2>
+        </div>
+    </div>
+</section>
+
+<script>
+// Toggle password visibility
+document.getElementById("togglePassword").addEventListener("click", function() {
+    const passwordInput = document.getElementById("password");
+    const icon = this.querySelector("i");
+    
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+    } else {
+        passwordInput.type = "password";
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+    }
+});
+
+// Form submission
+document.getElementById("loginForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    if (!email || !password) {
+        alert("❌ Please fill in all fields.");
+        return;
+    }
+
+    alert("✅ Login successful!");
+});
+</script>
+
+</body>
+</html>
